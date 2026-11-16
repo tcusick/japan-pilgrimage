@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stage map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="trails.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+html,body,#m{margin:0;height:100%;background:#EFE8D9;font-family:'Hanken Grotesk',sans-serif}
+.lbl{background:#1E2320;color:#F3EEE4;border:0;border-radius:2px;padding:3px 7px;font:600 12px 'Hanken Grotesk',sans-serif;box-shadow:none}
+.lbl:before{display:none}
+.num{width:22px;height:22px;border-radius:50%;background:#F3EEE4;border:2px solid #1E2320;color:#1E2320;font:700 11px/18px 'Hanken Grotesk',sans-serif;text-align:center;box-sizing:border-box}
+.num.end{background:#B8432B;border-color:#B8432B;color:#fff}
+.note{position:absolute;left:10px;bottom:22px;z-index:500;background:rgba(243,238,228,.94);padding:6px 9px;font-size:11px;color:#3B423E;max-width:250px;line-height:1.35}
+</style></head><body><div id="m"></div><div class="note">Trail from OpenStreetMap. On the ground, follow the numbered Kumano Kodo posts.</div>
+<script>
+const day=new URLSearchParams(location.search).get('day')||'14';const st=TRAILS[day]||TRAILS['14'];
+const map=L.map('m',{scrollWheelZoom:false,minZoom:9,zoomControl:true,attributionControl:true});
+const ESRI='Tiles © Esri — Sources: Esri, HERE, Garmin, USGS, NGA, OpenStreetMap contributors';
+const T={
+ streets:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+ topo:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+ gray:'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'};
+const tk=new URLSearchParams(location.search).get('tiles')||'streets';
+L.tileLayer(T[tk]||T.streets,{maxZoom:18,attribution:ESRI}).addTo(map);
+L.polyline(st.line,{color:'#fff',weight:9,opacity:.9,lineJoin:'round'}).addTo(map);
+L.polyline(st.line,{color:st.c,weight:5,opacity:1,lineJoin:'round'}).addTo(map);
+const last=st.wp.length-1;
+st.wp.forEach((w,i)=>{const end=i===0||i===last;
+ const m=L.marker(w.ll,{icon:L.divIcon({className:'',html:`<div class="num${end?' end':''}">${i+1}</div>`,iconSize:[22,22],iconAnchor:[11,11]})}).addTo(map);
+ const dir=i===0?'left':i===last?'right':(i%2?'bottom':'top');const off={left:[-14,0],right:[14,0],top:[0,-12],bottom:[0,12]}[dir];
+ m.bindTooltip(w.n+(i>0?` · ${(w.km*0.621371).toFixed(1)} mi`:''),{permanent:true,direction:dir,offset:off,className:'lbl'});});
+const B=L.latLngBounds(st.line).pad(0.12);
+const fit=()=>{const el=document.getElementById('m');if(!el.clientWidth||!el.clientHeight)return;map.invalidateSize();map.fitBounds(B);};
+map.setView(B.getCenter(),12);fit();
+window.addEventListener('load',fit);
+new ResizeObserver(fit).observe(document.getElementById('m'));
+</script></body></html>
