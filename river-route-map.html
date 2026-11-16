@@ -1,0 +1,47 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="trails.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>html,body,#m{height:100%;margin:0;background:#EFE8D9}
+.lbl{font:600 12px 'Hanken Grotesk',sans-serif;color:#F3EEE4;background:#1E2320;border:0;border-radius:2px;box-shadow:none;padding:3px 7px}.lbl:before{display:none}
+.pt{width:12px;height:12px;background:#1E2320;border:2px solid #fff;border-radius:50%}
+.bed{width:22px;height:22px;background:#B8432B;color:#fff;border:2px solid #fff;border-radius:50%;font:700 11px/18px sans-serif;text-align:center}
+.note{position:absolute;left:8px;top:8px;z-index:900;background:rgba(243,238,228,.94);padding:5px 8px;font:11px/1.35 'Hanken Grotesk',sans-serif;color:#3B423E;max-width:250px}</style></head>
+<body><div id="m"></div><div class="note" id="rt">Trail lines from OpenStreetMap. Dashed lines are bus, taxi or boat and are schematic. Boat center and Shingu are approximate.</div>
+<script>
+const view=new URLSearchParams(location.search).get('view')||'overview';
+const T13=TRAILS['13'],T14=TRAILS['14'],T15=TRAILS['15'],T16=TRAILS['16'],T19=TRAILS['19'];
+const TJ=T13.wp[0].ll,TK=T13.wp[1].ll,CH=T14.wp[2].ll,TS=T14.wp[3].ll,HO=T15.wp[2].ll,HG=T16.wp[1].ll,YU=T16.wp[2].ll,NA=T19.wp[3].ll;
+const BC=[33.7690,135.9230],SH=[33.7267,135.9975];
+const d2=(a,b)=>(a[0]-b[0])**2+(a[1]-b[1])**2;
+const near=(line,p)=>line.reduce((b,q,i)=>d2(q,p)<d2(line[b],p)?i:b,0);
+const ci=near(T14.line,CH),hi=near(T16.line,HG);
+const map=L.map('m',{scrollWheelZoom:false,minZoom:8});window.__map=map;
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri — Sources: Esri, HERE, Garmin, USGS, NGA, OpenStreetMap contributors'}).addTo(map);
+const line=(p,c,d)=>{L.polyline(p,{color:'#fff',weight:d?7:9,opacity:.9}).addTo(map);L.polyline(p,{color:c,weight:d?3:5,dashArray:d?'7 7':null}).addTo(map)};
+const off=d=>({left:[-14,0],right:[14,0],top:[0,-12],bottom:[0,12]}[d]);
+const tip=(m,t,d)=>m.addTo(map).bindTooltip(t,{permanent:true,direction:d,offset:off(d),className:'lbl'});
+const dot=(ll,t,d)=>tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="pt"></div>',iconSize:[12,12],iconAnchor:[6,6]})}),t,d);
+const bed=(ll,t,d)=>tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="bed">&#9790;</div>',iconSize:[22,22],iconAnchor:[11,11]})}),t,d);
+const W13='#8C7A3A',W14='#B8432B',W15='#C9762E',BL='#3E6A8A',DK='#1E2320';
+const a14=T14.line.slice(0,ci+1),b14=T14.line.slice(ci),h16=T16.line.slice(0,hi+1);
+let pts=[];
+if(view==='14'){line(a14,W14);dot(TK,'Takahara','left');bed(CH,'Chikatsuyu (sleep)','right');pts=a14;}
+else if(view==='15'){line(b14,W15);line([TS,HO],DK,true);line(h16,W15);line([HG,YU],DK,true);
+ dot(CH,'Chikatsuyu','left');dot(TS,'Tsugizakura-oji','top');dot(HO,'Hosshinmon-oji','top');dot(HG,'Hongu Taisha','right');bed(YU,'Yunomine (sleep)','bottom');pts=[CH,TS,HO,HG,YU].concat(b14,h16);}
+else if(view==='17'){line([YU,BC],DK,true);line([BC,SH],BL,true);bed(YU,'Yunomine','left');dot(BC,'Boat center (approx.)','top');bed(SH,'Shingu (sleep)','bottom');pts=[YU,BC,SH];}
+else if(view==='20'){
+ const OG=[33.8905,136.1162],HN=[33.8783,136.0931];pts=[OG,HN];
+ fetch('https://routing.openstreetmap.de/routed-bike/route/v1/driving/'+[OG,HN].map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson')
+ .then(r=>r.json()).then(j=>{const rt=j.routes[0];const ll=rt.geometry.coordinates.map(c=>[c[1],c[0]]);line(ll,'#8C7A3A');
+  const w=j.waypoints.map(x=>[x.location[1],x.location[0]]);dot(w[0],'Onigajo Center','top');dot(w[1],'Hana-no-Iwaya','bottom');
+  document.getElementById('rt').textContent='Suggested bike route from OpenStreetMap, '+(rt.distance/1000).toFixed(1)+' km. It may use tunnels, and bikes are not allowed in the Onigajo Tunnel, so follow local signs.';
+  B=L.latLngBounds(ll).pad(0.15);fit();}).catch(()=>{dot(OG,'Onigajo (approx.)','top');dot(HN,'Hana-no-Iwaya (approx.)','bottom');document.getElementById('rt').textContent='Route unavailable. Positions approximate.';});}
+else if(view==='18'){line([SH,NA],DK,true);bed(SH,'Shingu','bottom');dot(NA,'Nachi Taisha','top');pts=[SH,NA];}
+else{line(T13.line,W13);line(a14,W14);line(b14,W15);line([TS,HO],DK,true);line(h16,W15);line([HG,YU],DK,true);line([YU,BC],DK,true);line([BC,SH],BL,true);line([SH,NA],DK,true);
+ dot(TJ,'Takijiri-oji','left');bed(TK,'Takahara','left');bed(CH,'Chikatsuyu','top');dot(HO,'Hosshinmon-oji','top');dot(HG,'Hongu','right');bed(YU,'Yunomine','left');bed(SH,'Shingu','bottom');dot(NA,'Nachi Taisha','right');pts=[TJ,TK,CH,HO,HG,YU,BC,SH,NA];}
+let B=L.latLngBounds(pts).pad(view==='overview'?0.14:0.12);
+const fit=()=>{const el=document.getElementById('m');if(!el.clientWidth||!el.clientHeight)return;map.invalidateSize();map.fitBounds(B,{animate:false})};
+map.setView(B.getCenter(),11);fit();addEventListener('load',fit);new ResizeObserver(fit).observe(document.getElementById('m'));
+</script></body></html>

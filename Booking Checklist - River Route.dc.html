@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Japan Pilgrimage · Booking Checklist · River Route</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F3EEE4;color:#1E2320;font-family:'Hanken Grotesk',sans-serif}a{color:#2E4A3B}a:hover{color:#B8432B}*{box-sizing:border-box}</style>
+</helmet>
+<div style="max-width:960px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,5vw,40px) 96px">
+  <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:14px">Part two · March 12–23, 2027</div>
+  <h1 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(36px,6vw,64px);line-height:1.05;margin:0 0 16px">Booking checklist · River Route</h1>
+  <p style="font-size:18px;line-height:1.6;color:#2E3531;margin:0 0 32px;max-width:640px;text-wrap:pretty">Flights are done. Each item lists a book-by date, counted back from the first night of Part two. Dates assume today is October 19, 2026.</p>
+  <div style="display:flex;align-items:center;gap:16px;border-top:2px solid #1E2320;border-bottom:1px solid #D8CFBE;padding:14px 0;margin-bottom:40px;font-size:15px">
+    <strong style="font-family:'Shippori Mincho',serif;font-size:24px;white-space:nowrap;flex-shrink:0">{{ doneCount }} / {{ totalCount }}</strong><span style="color:#5D6460;flex-shrink:0">done</span>
+    <div style="flex:1;height:6px;background:#E2DACB"><div style="height:100%;background:#B8432B;width:{{ pct }}"></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:#D8CFBE;border:1px solid #D8CFBE;margin-bottom:56px">
+    <div style="background:#F3EEE4;padding:20px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460;margin-bottom:6px">KUMANO TRAVEL requests</div><div style="font-size:15px;line-height:1.5">A request is not a booking. Staff check availability, then you pay within 48 hours of their email to confirm.</div></div>
+    <div style="background:#F3EEE4;padding:20px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460;margin-bottom:6px">Hard cutoff</div><div style="font-size:15px;line-height:1.5">The site closes 20 days before check-in, about Feb 22 for Mar 14. Changing dates means cancelling and re-requesting.</div></div>
+    <div style="background:#F3EEE4;padding:20px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460;margin-bottom:6px">Every lodging request</div><div style="font-size:15px;line-height:1.5">Write “vegetarian, no meat or fish, no dashi” in the notes field, then confirm by email later.</div></div>
+  </div>
+
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+    <section style="margin-bottom:48px">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-bottom:6px">
+        <h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:28px;margin:0">{{ g.title }}</h2>
+        <span style="font-size:14px;color:#5D6460">{{ g.sub }}</span>
+      </div>
+      <div style="border-top:2px solid #1E2320">
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:16px;padding:18px 0;border-bottom:1px solid #D8CFBE;align-items:start">
+            <button onClick="{{ r.toggle }}" aria-label="Mark done" style="width:22px;height:22px;margin-top:2px;border:2px solid #1E2320;background:{{ r.boxBg }};color:#F3EEE4;font:700 14px/16px 'Hanken Grotesk',sans-serif;padding:0;cursor:pointer">{{ r.mark }}</button>
+            <div style="min-width:0;opacity:{{ r.op }}">
+              <div style="font-size:18px;font-weight:700;line-height:1.35;text-decoration:{{ r.deco }}">{{ r.title }}</div>
+              <div style="font-size:15px;line-height:1.55;color:#2E3531;margin-top:4px;text-wrap:pretty">{{ r.note }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:14px;font-weight:600">
+                <sc-for list="{{ r.links }}" as="l" hint-placeholder-count="1"><a href="{{ l.url }}" target="_blank" rel="noopener" style="text-decoration:underline;text-underline-offset:3px">{{ l.label }} ↗</a></sc-for>
+              </div>
+            </div>
+            <div style="text-align:right;white-space:nowrap"><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460">Book by</div><div style="font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:#B8432B">{{ r.by }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+  <p style="font-size:13px;line-height:1.6;color:#5D6460;margin:0;max-width:680px">Links go to official or provider pages. Availability, fees and booking windows change, so check each site. Rail seat sales generally open about one month before travel.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { done: {} };
+  componentDidMount() {
+    try { this.setState({ done: JSON.parse(localStorage.getItem('jp-booking-done') || '{}') }); } catch (e) {}
+  }
+  data() {
+    const KT = 'https://www.kumano-travel.com/en';
+    return [
+      { title: 'This week', sub: 'Lodging is the bottleneck. March is peak season on the Kumano Kodo.', rows: [
+        { id: 'roshi', pre: true, title: 'Confirm your Mar 12 departure with the roshi', note: 'Departure on Mar 12 is confirmed.', by: 'Done', links: [] },
+        { id: 'ktacct', title: 'Create a KUMANO TRAVEL account and guest list', note: 'The official local reservation system for trail lodging, luggage shuttles and tours. Requests need a saved guest list.', by: 'Fri Oct 23', links: [{ label: 'KUMANO TRAVEL', url: KT }] },
+        { id: 'trail', title: 'Trail lodging: Chikatsuyu Mar 14 · Yunomine Mar 15, 16', note: 'Three nights, all small inns, so submit them as one request. Minshuku Chikatsuyu is the pick in Chikatsuyu, with Guesthouse SORA and Kumano Kodo Inn Chikatsuyu BASE as vegetarian-friendly alternatives. Ryokan Adumaya is the first choice in Yunomine.', by: 'Fri Oct 30', links: [{ label: 'KUMANO TRAVEL lodging search', url: KT + '/search?area=3&category_type=categorytypeaccommodation' }, { label: 'Minshuku Chikatsuyu', url: KT + '/accommodations/minshuku-chikatsuyu' }, { label: 'Guesthouse SORA', url: KT + '/accommodations/chikatsuyu-guesthouse-sora' }, { label: 'Ryokan Adumaya on KUMANO TRAVEL', url: KT + '/accommodations/ryokan-adumaya' }, { label: 'Adumaya official', url: 'https://www.adumaya.co.jp/english/' }] },
+        { id: 'shingu', title: 'Shingu · Mar 17 (after the river boat)', note: 'Hotel New Palace is the pick, from about $55 per room with an onsen and private bath; two or three rooms for five. Resort Kumano Club is the splurge (vegetarian meals listed, price not found). Book once the boat is confirmed.', by: 'After the boat is booked', links: [{ label: 'Hotel New Palace on KUMANO TRAVEL', url: KT + '/accommodations/hotel-new-palace' }, { label: 'Resort Kumano Club on KUMANO TRAVEL', url: KT + '/accommodations/resort-kumano-club' }] },
+        { id: 'katsu', title: 'Nachisan Mar 18 and Kii-Katsuura Mar 19', note: 'Mar 18: Mitaki Sanso, the only lodging on Nachisan, from about $150 per person with supper and breakfast; ask about vegetarian meals. Backup: Guesthouse Michi (private, up to 5, no meals). Mar 19 onsen day: Kamenoi Hotel Nachi Katsuura, with Nakanoshima as the splurge. Request Mitaki Sanso first.', by: 'Fri Oct 30', links: [{ label: 'Mitaki Sanso', url: KT + '/accommodations/mitaki-sanso' }, { label: 'Kamenoi on KUMANO TRAVEL', url: KT + '/accommodations/kamenoi-hotel-nachi-katsuura' }, { label: 'Nakanoshima on KUMANO TRAVEL', url: KT + '/accommodations/kumano-bettei-nakanoshima' }] },
+        ]},
+      { title: 'Komorian · Takahara, Mar 13', sub: 'Booked: ¥85,000 for 5, dinner and breakfast, all meals vegetarian.', rows: [
+        { id: 'komorian', pre: true, title: 'Komorian booked', note: 'Whole house for the group. Vegetarian meals confirmed. Free shuttle from Takijiri, Takahara or Kurisugawa bus stop.', by: 'Done', links: [{ label: 'Komorian', url: 'https://komorian.jp/' }] },
+        { id: 'rooms', title: 'Ask the group about rooms: Kii-Tanabe and Yunomine', note: 'Kii-Tanabe Mar 12: Hotel Kii Tanabe, about $95 per room, so single rooms are possible. Yunomine Mar 15–16: Ryokan Adumaya, per person per night from about $122, with price depending on sharing. Only four rooms have private baths. Collect who wants a private room and who will share before booking.', by: 'This week', links: [] },
+        { id: 'boat', title: 'Book the 14:30 Kumano River boat for Mar 17 (Yunomine to Shingu)', note: 'Kumano Travel calendar: Mar 17 at 14:30 is available, and 10:00 is booked. Seats can go quickly, so book the 14:30 now. About ¥4,950 per adult, 90 minutes seated, 14:30 departure, ending near Hayatama Taisha. Reservation required, and small boats fill early. Season runs Mar 1 to Nov 30. The boat runs only with 3 or more adults; a charter is about ¥39,600 for up to 8. For 14:30, check the afternoon bus from Yunomine or Kawayu (the 8:40 and 8:48 buses suit the 10:00 boat) to Michi-no-Eki Kumanogawa, not Okukumano, and arrive 30 min early. Ask about group size and bag transfer to Shingu. If there is no space for the whole group, ask about a charter.', by: 'Today', links: [{ label: 'Book on KUMANO TRAVEL', url: 'https://www.kumano-travel.com/en/tours-activities/traditional-boat-tour/3749' }, { label: 'Kumano River Boat official', url: 'https://kawabune.com/en/' }] },
+        { id: 'miko', title: 'Pickup details from Miko via WhatsApp', note: 'Miko will send the detailed pickup information by WhatsApp one day before arrival, so watch for it on Mar 12. Contact her by email or WhatsApp at +81-90-7521-9901 with any questions. Confirm the Mar 14 dropoff time with her at the same time.', by: 'Mar 12', links: [] },
+        { id: 'lunch', pre: true, title: 'Rice-ball lunch for Mar 14 requested', note: 'Provided for a small extra charge (listed at ¥1,000).', by: 'Done', links: [] },
+      ]},
+      { title: 'By mid-November', sub: 'Easier rooms, but Ise fills on the holiday weekend.', rows: [
+        { id: 'tanabe', title: 'Kii-Tanabe · Mar 12', note: 'Near the station so you can buy trail lunch and take the first morning bus to Takijiri-oji. Hotel Kii Tanabe and Guest House Kumano are both about five minutes from the station.', by: 'Fri Nov 13', links: [{ label: 'Hotel Kii Tanabe', url: KT + '/accommodations/hotel-kii-tanabe' }, { label: 'Guest House Kumano', url: KT + '/accommodations/guest-house-kumano' }] },
+        { id: 'ise', title: 'Ise · Mar 20 (1 night)', note: 'Ise Shinsen is the pick, about $348 per room when checked for Mar 21; recheck Mar 20, a Saturday before the Vernal Equinox holiday. Book early.', by: 'Fri Nov 13', links: [{ label: 'Ise Jingu', url: 'https://www.isejingu.or.jp/en/' }] },
+      ]},
+      { title: 'December', sub: 'Lower pressure.', rows: [
+        { id: 'osaka', title: 'Osaka · Mar 21', note: 'Namba is where the Kintetsu train from Ise arrives; Rinku is near the airport. Either works for a Mar 23 flight.', by: 'Tue Dec 15', links: [] },
+        { id: 'pack', title: 'Order the Pilgrim Pack', note: 'Official guide book, trail maps and the stamp book, shipped from the tourism bureau. Order early enough to arrive before you leave for Japan.', by: 'Thu Dec 31', links: [{ label: 'Tanabe City Kumano Tourism Bureau', url: KT + '/travel-services/tanabe-city-kumano-tourism-bureau' }] },
+        { id: 'open', title: 'Plan Mar 22 (open day near Osaka)', note: 'Not planned. The flight home leaves Kansai (KIX) on Mar 23.', by: 'Open', links: [] }
+      ]},
+      { title: 'January', sub: 'Optional extras and confirmations.', rows: [
+                { id: 'lug', title: 'Luggage: send bags ahead between every inn (day packs only)', note: 'Plan for luggage to move each day from Takahara through Nachi. Komorian does not include luggage transfer, so same-day transfer by hakobu:ne is booked separately and paid. Bags usually need to be at the inn’s reception by about 7:30 a.m. Shuttles do not cover onward trips to cities. Work out each leg once lodging is confirmed, including the Mar 12 Kyoto bag and the Mar 20 leg from Kii-Katsuura to Ise.', by: 'Fri Jan 15', links: [{ label: 'En-Joy-Unso', url: KT + '/travel-services/luggage-shuttle-en-joy-unso' }, { label: 'Torii luggage service', url: KT + '/travel-services/luggage-shuttle-service-torii' }] },
+        { id: 'veg', title: 'Confirm vegetarian dinners in writing', note: 'Email each inn after confirmation: Chikatsuyu, Yunomine (2 nights), Shingu, Nachisan or Kii-Katsuura, Ise.', by: 'Fri Jan 29', links: [] }
+      ]},
+      { title: 'February', sub: 'Rail seats open about one month before travel.', rows: [
+        { id: 'xfer', title: 'Trail transfers', note: 'Ask your inns or Miko to arrange taxis and buses: Takijiri-oji bus from Kii-Tanabe (Mar 13), taxi Takahara to Chikatsuyu for non-walkers (Mar 14), Chikatsuyu to Tsugizakura-oji, on to Hosshinmon-oji, and Hongu to Yunomine (Mar 15), bus from Yunomine to the Kawabune Center (Mar 17), Shingu to Nachi (Mar 18).', by: 'Mon Feb 15', links: [] },
+        { id: 'j1', title: 'JR Kyoto to Kii-Tanabe via Osaka · Mar 12', note: 'Reserve the Kuroshio limited express seat at a JR ticket office in Japan, or online if available.', by: 'Fri Feb 12', links: [] },
+        { id: 'j2', title: 'JR Nanki limited express: Kii-Katsuura to Kumano-shi, then Taki and Iseshi · Mar 20', note: 'The Nanki runs only a few times a day from Kii-Katsuura (an older source lists about 8:55, 12:24 and 17:11). It stops at Kumano-shi for Hana-no-Iwaya and Onigajo, then goes to Taki, with a local train to Iseshi. Reserve seats and check the 2027 timetable. Anyone leaving instead can take the direct Kuroshio 12 at 6:45 a.m. to Kyoto (about ¥8,670).', by: 'Fri Feb 19', links: [] },
+        { id: 'kum', title: 'E-bikes at Kumano-shi · Mar 20', note: 'Kumano City Tourism Corporation at Kumano-shi Station, 654-1 Ido-cho, tel 0597-89-2229. E-bikes about ¥1,000 for 4 hours to a full day (9am to 6pm), plus a ¥2,000 deposit per bike per an older page. Bikes can be returned at other stations such as Otsunachaya and the Onigajo Center. Ask whether five e-bikes are available and about luggage storage. No cycling in the Onigajo Tunnel. Send luggage ahead to the Ise inn.', by: 'Fri Feb 19', links: [{ label: 'Rental bicycle info', url: 'https://kumanokodo-iseji.jp/en/feature/rentalcycle/' }, { label: 'Hana-no-Iwaya (Japan Travel)', url: 'https://www.japan.travel/en/spot/106/' }] },
+        { id: 'k2', title: 'Kintetsu limited express · Ise to Osaka · Mar 21', note: 'Kintetsu online reservation is in English.', by: 'Fri Feb 19', links: [{ label: 'Kintetsu seat reservation', url: 'https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/' }] },
+      ]},
+      { title: 'Final week', sub: 'In Kyoto, before the group leaves.', rows: [
+        { id: 'taq', title: 'Send the main bag ahead from Kyoto by courier', note: 'Ask your Kyoto lodging desk to book a takkyubin shipment. Destination to be decided; see the luggage item. Allow two days for delivery.', by: 'Tue Mar 9', links: [] },
+        { id: 'check', title: 'Check trail conditions and closures', note: 'Look for weather or landslide notices on the tourism bureau site.', by: 'Wed Mar 10', links: [{ label: 'Tanabe Kumano Tourism Bureau', url: 'https://www.tb-kumano.jp/en/' }] }
+      ]}
+    ];
+  }
+  renderVals() {
+    const done = this.state.done;
+    let total = 0, dn = 0;
+    const groups = this.data().map(g => ({
+      title: g.title, sub: g.sub,
+      rows: g.rows.map(r => {
+        total++; const d = r.id in done ? !!done[r.id] : !!r.pre; if (d) dn++;
+        return { ...r, boxBg: d ? '#1E2320' : 'transparent', mark: d ? '✓' : '', op: d ? '0.5' : '1', deco: d ? 'line-through' : 'none',
+          toggle: () => { const n = { ...this.state.done, [r.id]: !d }; try { localStorage.setItem('jp-booking-done', JSON.stringify(n)); } catch (e) {} this.setState({ done: n }); } };
+      })
+    }));
+    return { groups, totalCount: total, doneCount: dn, pct: (total ? Math.round(dn / total * 100) : 0) + '%' };
+  }
+}
+</script>
+</body>
+</html>
