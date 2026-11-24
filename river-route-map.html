@@ -30,7 +30,8 @@ let pts=[];
 if(view==='14'){line(a14,W14);dot(TK,'Takahara','left');bed(CH,'Chikatsuyu (sleep)','right');pts=a14;}
 else if(view==='15'){line(b14,W15);line([TS,HO],DK,true);line(h16,W15);line([HG,YU],DK,true);
  dot(CH,'Chikatsuyu','left');dot(TS,'Tsugizakura-oji','top');dot(HO,'Hosshinmon-oji','top');dot(HG,'Hongu Taisha','right');bed(YU,'Yunomine (sleep)','bottom');pts=[CH,TS,HO,HG,YU].concat(b14,h16);}
-else if(view==='17'){line([YU,BC],DK,true);line([BC,SH],BL,true);bed(YU,'Yunomine','left');dot(BC,'Boat center (approx.)','top');bed(SH,'Shingu (sleep)','bottom');pts=[YU,BC,SH];}
+else if(view==='17'){line([YU,BC],DK,true);line([BC,SH],BL,true);bed(YU,'Yunomine','left');dot(BC,'Kawabune Center (boat start)','top');bed(SH,'Shingu, Hayatama Taisha','bottom');pts=[YU,BC,SH];
+ document.getElementById('rt').textContent='Bus Yunomine to the boat start (dashed), then the 14:30 boat about 90 min to Shingu (blue). Lines are schematic, not the actual river course.';}
 else if(view==='20'){
  const OG=[33.8905,136.1162],HN=[33.8783,136.0931];pts=[OG,HN];
  fetch('https://routing.openstreetmap.de/routed-bike/route/v1/driving/'+[OG,HN].map(p=>p[1]+','+p[0]).join(';')+'?overview=full&geometries=geojson')

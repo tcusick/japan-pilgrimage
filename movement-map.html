@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="trails.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>html,body,#m{height:100%;margin:0;background:#EFE8D9}
+.lbl{font:600 12px 'Hanken Grotesk',sans-serif;color:#F3EEE4;background:#1E2320;border:0;border-radius:2px;box-shadow:none;padding:3px 7px}.lbl:before{display:none}
+.pt{width:12px;height:12px;background:#1E2320;border:2px solid #fff;border-radius:50%}
+.bed{width:22px;height:22px;background:#2E4A3B;color:#fff;border:2px solid #fff;border-radius:50%;font:700 11px/18px sans-serif;text-align:center}
+.q{width:24px;height:24px;background:#B8432B;color:#fff;border:2px solid #fff;font:700 13px/20px 'Hanken Grotesk',sans-serif;text-align:center}
+.note{position:absolute;left:8px;bottom:8px;z-index:900;background:rgba(243,238,228,.94);padding:6px 9px;font:11px/1.5 'Hanken Grotesk',sans-serif;color:#3B423E}
+.note i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:6px}</style></head>
+<body><div id="m"></div>
+<div class="note"><i style="border-top:4px solid #B8432B"></i>Walkers on trail<br><i style="border-top:3px dashed #1E2320"></i>Non-walkers and bags by bus, taxi or shuttle (schematic)<br><i style="border-top:3px dashed #3E6A8A"></i>Everyone by boat, Mar 17<br><span style="display:inline-block;width:14px;height:14px;background:#B8432B;vertical-align:middle;margin-right:6px"></span>Open decision (numbers match the list)</div>
+<script>
+const T13=TRAILS['13'],T14=TRAILS['14'],T15=TRAILS['15'],T16=TRAILS['16'],T19=TRAILS['19'];
+const TJ=T13.wp[0].ll,TK=T13.wp[1].ll,CH=T14.wp[2].ll,HO=T15.wp[2].ll,HG=T16.wp[1].ll,YU=T16.wp[2].ll,NA=T19.wp[3].ll;
+const BC=[33.7690,135.9230],SH=[33.7267,135.9975],KT=[33.7288,135.3805];
+const d2=(a,b)=>(a[0]-b[0])**2+(a[1]-b[1])**2;
+const near=(l,p)=>l.reduce((b,q,i)=>d2(q,p)<d2(l[b],p)?i:b,0);
+const ci=near(T14.line,CH),hi=near(T16.line,HG);
+const map=L.map('m',{scrollWheelZoom:false,minZoom:8});
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri — Sources: Esri, HERE, Garmin, USGS, NGA, OpenStreetMap contributors'}).addTo(map);
+const line=(p,c,d)=>{L.polyline(p,{color:'#fff',weight:d?7:9,opacity:.9}).addTo(map);L.polyline(p,{color:c,weight:d?3:5,dashArray:d?'7 7':null}).addTo(map)};
+const off=d=>({left:[-14,0],right:[14,0],top:[0,-12],bottom:[0,12]}[d]);
+const tip=(m,t,d)=>m.addTo(map).bindTooltip(t,{permanent:true,direction:d,offset:off(d),className:'lbl'});
+const dot=(ll,t,d)=>tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="pt"></div>',iconSize:[12,12],iconAnchor:[6,6]})}),t,d);
+const bed=(ll,t,d)=>tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="bed">&#9790;</div>',iconSize:[22,22],iconAnchor:[11,11]})}),t,d);
+const q=(ll,n,ax,ay)=>L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="q">'+n+'</div>',iconSize:[24,24],iconAnchor:[ax,ay]}),zIndexOffset:500}).addTo(map);
+const W='#B8432B',DK='#1E2320',BL='#3E6A8A';
+line([KT,TJ],DK,true);line(T13.line,W);line([TK,CH],DK,true);line(T14.line.slice(0,ci+1),W);
+line(T14.line.slice(ci),W);line(T16.line.slice(0,hi+1),W);line([CH,YU],DK,true);
+line([YU,BC],DK,true);line([BC,SH],BL,true);line([SH,NA],DK,true);
+bed(KT,'Kii-Tanabe, Mar 12','left');bed(TK,'Komorian, Takahara, Mar 13','left');bed(CH,'Chikatsuyu, Mar 14','top');bed(YU,'Yunomine, Mar 15–16','bottom');bed(SH,'Shingu, Mar 17','left');bed(NA,'Nachisan, Mar 18','right');
+
+q(TK,'1',-10,-10);
+q(CH,'2',-10,-10);
+q([YU[0]*0.3+BC[0]*0.7,YU[1]*0.3+BC[1]*0.7],'3',12,12);
+q(NA,'4',34,-8);
+const B=L.latLngBounds([KT,TJ,TK,CH,YU,BC,SH,NA]).pad(0.12);
+const fit=()=>{const el=document.getElementById('m');if(!el.clientWidth||!el.clientHeight)return;map.invalidateSize();map.fitBounds(B,{animate:false})};
+map.setView(B.getCenter(),10);fit();map.whenReady(fit);addEventListener('load',fit);new ResizeObserver(fit).observe(document.getElementById('m'));[200,800,2000].forEach(t=>setTimeout(fit,t));
+</script></body></html>
