@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Japan Pilgrimage · Daily Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F3EEE4;color:#1E2320;font-family:'Hanken Grotesk',sans-serif}a{color:#2E4A3B}a:hover{color:#B8432B}*{box-sizing:border-box}button{font-family:inherit}</style>
+</helmet>
+<div style="max-width:1040px;margin:0 auto;padding:clamp(24px,5vw,56px) clamp(16px,4vw,40px) 72px">
+<div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:10px">Morning briefing · March 12–23, 2027</div>
+<h1 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0 0 10px">Daily plan</h1>
+<p style="font-size:16px;line-height:1.6;color:#2E3531;margin:0 0 22px;max-width:700px;text-wrap:pretty">Pick a day for the plan, split by walkers and non-walkers, with bags, meals and what is still open. Times marked "check" are not confirmed for 2027. Full details are in the <a href="Japan Pilgrimage.dc.html">brochure</a>, <a href="Lodging Options.dc.html">lodging options</a> and <a href="People and Luggage Plan.dc.html">people and luggage plan</a>.</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+<sc-for list="{{ tabs }}" as="d" hint-placeholder-count="12">
+<button onClick="{{ d.pick }}" style="cursor:pointer;border:1px solid #1E2320;background:{{ d.bg }};color:{{ d.fg }};padding:8px 12px;font-size:14px;font-weight:600;line-height:1.2;text-align:left;min-width:92px"><span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.85">{{ d.dow }}</span>{{ d.date }}</button>
+</sc-for>
+</div>
+
+<div style="background:#F7F3EA;border:1px solid #D8CFBE;padding:clamp(18px,3vw,32px)">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;margin-bottom:6px">
+<div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#B8432B">{{ day.label }}</div>
+<div style="font-size:14px;color:#5D6460;font-weight:600">{{ day.group }}</div>
+</div>
+<h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(26px,4vw,38px);line-height:1.1;margin:0 0 12px">{{ day.title }}</h2>
+<p style="font-size:17px;line-height:1.6;color:#2E3531;margin:0 0 20px;max-width:760px;text-wrap:pretty">{{ day.summary }}</p>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 0;border-top:1px solid #D8CFBE;border-bottom:1px solid #D8CFBE;margin-bottom:22px">
+<span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460">Sleep</span>
+<span style="font-size:17px;font-weight:600">{{ day.sleep }}</span>
+<span style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff;background:{{ day.statusBg }};padding:4px 8px">{{ day.status }}</span>
+<span style="font-size:15px;color:#2E3531;flex:1 1 260px">{{ day.sleepNote }}</span>
+</div>
+
+<sc-if value="{{ day.split }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;margin-bottom:22px">
+<div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#2E4A3B;margin-bottom:8px">Walkers (3)</div>
+<sc-for list="{{ day.walkers }}" as="s" hint-placeholder-count="3"><div style="font-size:16px;line-height:1.5;padding:8px 0;border-top:1px solid #E6DECE;color:#1E2320">{{ s }}</div></sc-for></div>
+<div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#2E4A3B;margin-bottom:8px">Non-walkers (2)</div>
+<sc-for list="{{ day.nonwalkers }}" as="s" hint-placeholder-count="3"><div style="font-size:16px;line-height:1.5;padding:8px 0;border-top:1px solid #E6DECE;color:#1E2320">{{ s }}</div></sc-for></div>
+</div>
+</sc-if>
+<sc-if value="{{ day.together }}" hint-placeholder-val="{{ true }}">
+<div style="margin-bottom:22px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#2E4A3B;margin-bottom:8px">Plan</div>
+<sc-for list="{{ day.everyone }}" as="s" hint-placeholder-count="3"><div style="font-size:16px;line-height:1.5;padding:8px 0;border-top:1px solid #E6DECE;color:#1E2320">{{ s }}</div></sc-for></div>
+</sc-if>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-bottom:22px">
+<div style="background:#fff;border:1px solid #E6DECE;padding:14px 16px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460;margin-bottom:6px">Bags</div><div style="font-size:15px;line-height:1.55;color:#2E3531">{{ day.bags }}</div></div>
+<div style="background:#fff;border:1px solid #E6DECE;padding:14px 16px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460;margin-bottom:6px">Meals</div><div style="font-size:15px;line-height:1.55;color:#2E3531">{{ day.meals }}</div></div>
+</div>
+
+<div style="border-left:3px solid #B8432B;padding:4px 0 4px 16px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:6px">Still open</div>
+<sc-for list="{{ day.open }}" as="s" hint-placeholder-count="2"><div style="font-size:15px;line-height:1.55;color:#2E3531;padding:2px 0">{{ s }}</div></sc-for></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;gap:12px;margin-top:18px">
+<button onClick="{{ prev }}" style="cursor:pointer;border:1px solid #1E2320;background:transparent;color:#1E2320;padding:12px 18px;font-size:15px;font-weight:600">{{ prevLabel }}</button>
+<button onClick="{{ next }}" style="cursor:pointer;border:1px solid #1E2320;background:#1E2320;color:#F3EEE4;padding:12px 18px;font-size:15px;font-weight:600">{{ nextLabel }}</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DAYS = [
+{ iso:"2027-03-12", dow:"Fri", date:"Mar 12", title:"Kyoto to Kii-Tanabe", group:"All 5", summary:"Part two begins. Farewells in Kyoto, then the train south to the gateway town for the Kumano Kodo.",
+  sleep:"Hotel Kii Tanabe", status:"Booked", sleepNote:"5 Deluxe Double rooms, breakfast included. Check-in 4:00 to 10:00 p.m., check-out by 10:00 a.m.",
+  everyone:["Farewells with the group in Kyoto. Main luggage goes ahead by courier to the Osaka hotel.","JR Kuroshio limited express from Kyoto via Osaka, about 3.5 to 4 hr (seat reservation and times: check).","Arrive after 4:00 p.m., eat in town, buy trail lunch and snacks for tomorrow."],
+  bags:"Large bags are shipped from Kyoto to Osaka. Day bags only from here. Ask the hotel to hold the bags for the Mahoroma pickup on Mar 13.",
+  meals:"The hotel serves no dinner. Eat in town on arrival, since shops close early. Breakfast is included; ask whether it can be vegetarian and early, because the walkers take the 11:35 a.m. bus.",
+  open:["Train time and seat reservation.","Email the hotel about holding bags and early breakfast."] },
+{ iso:"2027-03-13", dow:"Sat", date:"Mar 13", title:"Takijiri to Takahara", group:"All 5", summary:"A short, steep first day. The walkers climb to the ridge village of Takahara, and Miko collects everyone and drives to Komorian.",
+  sleep:"Komorian, Takahara", status:"Booked", sleepNote:"Whole house, dinner and breakfast, all meals vegetarian, free shuttle. $567 total.", split:true,
+  walkers:["Early breakfast. 11:35 a.m. bus from Kii-Tanabe to Takijiri (check the 2027 time).","Walk Takijiri-oji to Takahara, 2.3 mi (3.7 km), steep, 2 to 3 hr, about +1,358 ft.","Arrive at the Takahara rest area about 3:00 p.m. Miko collects you there."],
+  nonwalkers:["1:00 p.m. bus to Takijiri (check). Visit Takijiri-oji and the Kumano Kodo Kan.","Miko picks you up shortly after 2:00 p.m., then collects the walkers at Takahara.","Everyone rides together to Komorian."],
+  bags:"Mahoroma moves the 5 bags from Hotel Kii Tanabe to Komorian the same day (booking pending, about $53 for up to 2 pieces plus $7 each extra).",
+  meals:"Pack a lunch from Kii-Tanabe. Dinner and breakfast at Komorian, all vegetarian. The rice-ball lunch for Mar 14 is requested.",
+  open:["Book Mahoroma (after all lodging is booked).","Miko sends pickup details by WhatsApp the day before, +81-90-7521-9901.","Confirm the 2027 bus times with the tourism bureau."] },
+{ iso:"2027-03-14", dow:"Sun", date:"Mar 14", title:"Takahara to Chikatsuyu", group:"All 5", summary:"A shorter walking day through forest ridges, past Gyuba-doji, into the Chikatsuyu valley.",
+  sleep:"Minshuku Wago, Chikatsuyu", status:"Booked", sleepNote:"3 Japanese-style rooms, no meals in the rate, non-refundable. Check-in 3:00 to 6:00 p.m., check-out 6:00 to 9:00 a.m. Phone +81 90-8146-6823.", split:true,
+  walkers:["Breakfast at Komorian, rice-ball lunch. Start about 8:30 to 9:00 a.m.","Walk Takahara to Chikatsuyu, 6.0 mi (9.6 km), about 4 hr, via Gyuba-doji.","Arrive about 2:00 to 3:00 p.m. at Chikatsuyu-oji; Wago is a 30 second walk."],
+  nonwalkers:["Miko drops you at the Kurisugawa bus stop (check the bus time to Chikatsuyu).","Wago is a 10 second walk from the Chikatsuyu bus stop.","Walk to Chikatsuyu-oji and the village while you wait for check-in."],
+  bags:"Mahoroma moves the bags from Komorian to Wago (about $23). Ask Wago to accept them before you arrive.",
+  meals:"Wago cannot cook without dashi (fish stock). Buy dinner, the Mar 15 lunch and any breakfast items at the A-Coop before it stops taking orders at 5:30 p.m. (open 8:30 a.m. to 6:00 p.m.). Western breakfast (bread, salad, fruit, about $7 each, cash) only if Ike confirms no meat, fish or dashi.",
+  open:["Ike’s reply about the Western breakfast. Order by 10 a.m. today.","Decide on Mar 13 whether the non-walkers walk."] },
+{ iso:"2027-03-15", dow:"Mon", date:"Mar 15", title:"Chikatsuyu to Hongu and Yunomine", group:"All 5", summary:"A short morning walk to Tsugizakura-oji, a transfer to Hosshinmon-oji, then the walkers continue to Hongu Taisha. A bus carries everyone to Yunomine.",
+  sleep:"Yunomine Onsen", status:"Pending", sleepNote:"Ryokan Adumaya was emailed for Mar 15 to 17 and has not replied. Backups: Minshuku Yunosato, Guesthouse Kumano Iori, Kumano Base.", split:true,
+  walkers:["Check out of Wago 6:00 to 9:00 a.m. Walk Chikatsuyu to Tsugizakura-oji (shrine, cedars, Nonaka-no-shimizu spring).","Bus or road transfer to Hosshinmon-oji, then walk to Kumano Hongu Taisha and Oyunohara.","About 6.1 mi on foot in two short walks. Bus to Yunomine."],
+  nonwalkers:["Visit Tsugizakura-oji with the walkers, or travel by bus (check).","Bus to Hongu, see Hongu Taisha and Oyunohara.","Bus on to Yunomine and check in."],
+  bags:"Mahoroma moves the bags from Chikatsuyu to the Hongu area, which includes Yunomine (about $23).",
+  meals:"Lunch comes from the A-Coop the evening before. Dinner and breakfast depend on the inn; ask for vegetarian meals in writing.",
+  open:["Adumaya’s reply, or hold Kumano Iori (free cancellation before Mar 8).","Bus times for each leg."] },
+{ iso:"2027-03-16", dow:"Tue", date:"Mar 16", title:"Rest day in Yunomine", group:"All 5", summary:"A full rest day in the onsen village. Walkers who want a hike can add Akagi-goe.",
+  sleep:"Yunomine Onsen", status:"Pending", sleepNote:"Same inn as Mar 15. See Mar 15.", split:true,
+  walkers:["Onsen and rest. Optional Akagi-goe, about 4 to 4.5 mi, 3 to 4 hr, with substantial climbing.","Tsuboyu, a small riverside bath that admits one party at a time for about 30 min.","Toko-ji temple in the village."],
+  nonwalkers:["Onsen, Tsuboyu and Toko-ji.","Rest, laundry, and pack for the river boat.","A short bus trip to Hongu if wanted."],
+  bags:"Pack the bags tonight for Mahoroma pickup on Mar 17 (Yunomine to Shingu).",
+  meals:"At the inn. Check what Yunomine shops and restaurants sell for lunch.",
+  open:["Book Mahoroma for Mar 17.","Check the weather for the boat tomorrow."] },
+{ iso:"2027-03-17", dow:"Wed", date:"Mar 17", title:"Kumano River boat to Shingu", group:"All 5", summary:"A bus to the Kawabune Center, then a 90 minute seated boat ride that lands near Hayatama Taisha, the third Grand Shrine.",
+  sleep:"Guest House No-Che, Shingu", status:"Booked", sleepNote:"Private house booked on Airbnb. $189.",
+  everyone:["Check email before leaving Yunomine. Heavy rain or high or low water can cancel the tour.","Bus to Michi-no-Eki Kumanogawa. Arrive by 2:00 p.m.","2:30 p.m. boat, 5 adults, about $37 each ($183 total, booking no. 2802). Light rain is fine; bring rain gear.","Land near Hayatama Taisha and its sacred nagi tree. Kamikura-jinja (538 steps) is optional and walkers only."],
+  bags:"Mahoroma moves the bags from Yunomine to the Shingu house (about $27 for up to 2 pieces). The boat carries day bags only.",
+  meals:"Lunch before the boat. Dinner in Shingu; no plan yet.",
+  open:["Book Mahoroma for this leg.","Confirm the Shingu host will accept the bags.","Plan dinner in Shingu."] },
+{ iso:"2027-03-18", dow:"Thu", date:"Mar 18", title:"Shingu to Nachi", group:"All 5", summary:"The formal end of the pilgrimage. Daimon-zaka, Nachi Taisha, Seiganto-ji and Nachi Falls, then a night on Nachisan.",
+  sleep:"Mitaki Sanso, Nachisan", status:"Booked", sleepNote:"2 rooms (3 and 2), supper and breakfast, vegan meals confirmed by the inn. Check-in 3:00 to 5:00 p.m., arrive by 5:00 p.m. for supper. $698 total.", split:true,
+  walkers:["Train and bus toward Nachi (check times). Get off for Daimon-zaka.","Walk Daimon-zaka, about 0.6 mi, to Nachi Taisha, Seiganto-ji and the falls.","Reach Mitaki Sanso by 5:00 p.m."],
+  nonwalkers:["Bus farther uphill to Nachisan.","Meet the walkers at the shrine complex and the falls.","Check in to Mitaki Sanso and use the onsen."],
+  bags:"Carry the bags on the train and bus, or use Mahoroma from Shingu to Nachi-Katsuura (about $37). Ask whether it delivers to Nachisan.",
+  meals:"Supper at 5:00 p.m. and breakfast at the inn, vegan. Lunch before leaving Shingu.",
+  open:["Train and bus times.","Mahoroma or carrying the bags.","Whether Mahoroma reaches Mitaki Sanso."] },
+{ iso:"2027-03-19", dow:"Fri", date:"Mar 19", title:"Nachisan to Kii-Katsuura onsen day", group:"All 5", summary:"The falls and Seiganto-ji at dawn, then the bus down to Kii-Katsuura for an onsen day.",
+  sleep:"Kamenoi Hotel Nachi Katsuura", status:"Booked", sleepNote:"Japanese C for 2 and Superior Japanese Western for 3, ocean view, breakfast and dinner. $578 total. Check-in 3:00 p.m.", split:true,
+  walkers:["Dawn at Nachi Falls and Seiganto-ji, before the tour buses. Breakfast at the inn.","Optional walk toward Amida-ji and Mount Myohozan.","Bus to Kii-Katsuura, about 25 min. Onsen and rest."],
+  nonwalkers:["Dawn at the falls and Seiganto-ji, or breakfast and a slow morning.","Bus to Kii-Katsuura, about 25 min.","Onsen and rest."],
+  bags:"Carry the bags from Nachisan. They go with you on the bus. Check-out at Mitaki Sanso is 6:00 to 10:00 a.m.",
+  meals:"Breakfast at Mitaki Sanso. Dinner and breakfast at Kamenoi; vegetarian meals can be changed to shojin kaiseki if you message the hotel by Mar 16. Dinner check-in is by 6:00 p.m.",
+  open:["Message Kamenoi by Mar 16 to switch to shojin kaiseki and get a written reply.","Kamenoi’s reply about room placement.","Optional Kamenoi activities: zazen, goma fire ritual, guided walk."] },
+{ iso:"2027-03-20", dow:"Sat", date:"Mar 20", title:"Kii-Katsuura to Ise", group:"4 (Vickie leaves for Tokyo)", summary:"Train up the coast to Ise, with an optional stop at Hana-no-Iwaya and Onigajo near Kumano-shi.",
+  sleep:"Ise house (Mar 20 to 22)", status:"Booked", sleepNote:"Airbnb near Ise Jingu Geku for 4 adults. $488.",
+  everyone:["Check out of Kamenoi by 10:00 a.m. Vickie leaves for Tokyo.","JR Nanki limited express to Kumano-shi, about 30 min (check the 2027 timetable; few trains a day).","Optional: Hana-no-Iwaya shrine and the Onigajo sea cliffs.","Continue on the Nanki to Taki, then a local train to Iseshi."],
+  bags:"Carry the bags, or use station lockers at Kumano-shi if stopping there.",
+  meals:"Breakfast at Kamenoi. Plan lunch and dinner in Ise; vegetarian restaurants not yet researched.",
+  open:["Train times and seat reservations.","Bus times to Hana-no-Iwaya and Onigajo.","Whether to stop at Kumano-shi at all."] },
+{ iso:"2027-03-21", dow:"Sun", date:"Mar 21", title:"Ise Jingu and on to Osaka", group:"4", summary:"The Outer Shrine first, then the Inner Shrine. Kintetsu express to Osaka in the afternoon.",
+  sleep:"Osaka (Namba area)", status:"Not booked", sleepNote:"Hotel Royal Classic Osaka was the pick, for 4 in 2 rooms. No price found.",
+  everyone:["Outer Shrine (Geku), then the Inner Shrine (Naiku) across the Uji Bridge.","Okage Yokocho for lunch and tea.","Kintetsu limited express to Osaka, about 2 hr."],
+  bags:"Carry the bags. Check out of the Ise house first.",
+  meals:"Vegetarian okonomiyaki in Namba: OKO Fun Okonomiyaki Bar (vegan menu) is the closest fit.",
+  open:["Book the Osaka hotel.","Kintetsu seat reservation."] },
+{ iso:"2027-03-22", dow:"Mon", date:"Mar 22", title:"Open day in Osaka", group:"4", summary:"No plan yet. Settle in a day ahead so the Mar 23 morning is unhurried.",
+  sleep:"Osaka (Namba area)", status:"Not booked", sleepNote:"Same hotel as Mar 21 if booked for two nights.",
+  everyone:["Nothing planned.","Pack the evening before."],
+  bags:"Collect the large bags that were shipped from Kyoto to the Osaka hotel.",
+  meals:"Namba has several vegetarian restaurants; see Mar 21.",
+  open:["Decide what to do with the day."] },
+{ iso:"2027-03-23", dow:"Tue", date:"Mar 23", title:"Fly home from KIX", group:"4", summary:"Flight from Kansai International Airport at 3:30 p.m.",
+  sleep:"Home", status:"Flights booked", sleepNote:"The Newark layover hotel is paid for.",
+  everyone:["Leave the Osaka hotel in the morning for KIX.","Flight departs at 3:30 p.m."],
+  bags:"All the bags travel together to the airport.",
+  meals:"Breakfast near the hotel.",
+  open:["Choose the train to KIX and the departure time."] }
+];
+class Component extends DCLogic {
+  state = { i: 0 };
+  componentDidMount() {
+    let i = 0;
+    try { const s = Number(localStorage.getItem("daily-plan-day")); if (s >= 0 && s < DAYS.length) i = s; } catch (e) {}
+    const n = new Date(), t = n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0");
+    const k = DAYS.findIndex(d => d.iso === t); if (k >= 0) i = k;
+    this.setState({ i });
+  }
+  go(i) { this.setState({ i }); try { localStorage.setItem("daily-plan-day", String(i)); } catch (e) {} }
+  renderVals() {
+    const i = this.state.i, d = DAYS[i];
+    const col = { "Booked": "#2E4A3B", "Flights booked": "#2E4A3B", "Pending": "#B8432B", "Not booked": "#5D6460" };
+    return {
+      tabs: DAYS.map((x, j) => ({ dow: x.dow, date: x.date, bg: j === i ? "#1E2320" : "transparent", fg: j === i ? "#F3EEE4" : "#1E2320", pick: () => this.go(j) })),
+      day: { ...d, label: d.dow + " " + d.date + " · Day " + (i + 1), together: !d.split, split: !!d.split, statusBg: col[d.status] || "#5D6460", walkers: d.walkers || [], nonwalkers: d.nonwalkers || [], everyone: d.everyone || [] },
+      prev: () => i > 0 && this.go(i - 1), next: () => i < DAYS.length - 1 && this.go(i + 1),
+      prevLabel: i > 0 ? "← " + DAYS[i - 1].date : "",
+      nextLabel: i < DAYS.length - 1 ? DAYS[i + 1].date + " →" : ""
+    };
+  }
+}
+</script>
+</body>
+</html>

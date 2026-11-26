@@ -66,13 +66,21 @@ class Component extends DCLogic {
       { id: 2, date: 'Mar 17', desc: 'Kumano River boat, 14:30, booking no. 2802 (5 adults; paid at check-in)', amt: 183.33, payer: -1 },
       { id: 3, date: 'Mar 23', desc: 'Layover hotel, Newark, on the way home (Vickie not included)', amt: 231, payer: 3, ex: [4] },
       { id: 4, date: 'Mar 20–22', desc: 'Ise Airbnb (Vickie not included)', amt: 488, payer: 1, ex: [4] },
-      { id: 5, date: 'Mar 17', desc: 'Shingu Airbnb', amt: 189, payer: 3 }
+      { id: 5, date: 'Mar 17', desc: 'Shingu Airbnb', amt: 189, payer: 3 },
+      { id: 6, date: 'Mar 12', desc: 'Hotel Kii Tanabe, Kii-Tanabe: 5 rooms with breakfast (Booking.com)', amt: 310, payer: 0 },
+      { id: 7, date: 'Mar 14', desc: 'Minshuku Wago, Chikatsuyu: 3 rooms, no meals (Booking.com)', amt: 399.84, payer: 0 },
+      { id: 8, date: 'Mar 18', desc: 'Mitaki Sanso, Nachisan: 2 rooms, supper and breakfast (Booking.com; due Mar 9)', amt: 697.7, payer: 0 },
+      { id: 9, date: 'Mar 19', desc: 'Kamenoi Hotel Nachi Katsuura, Kii-Katsuura: 2 rooms, dinner and breakfast (Booking.com)', amt: 577.57, payer: 0 }
     ], fDate: '', fDesc: '', fAmt: '' };
   componentDidMount() { try { const s = JSON.parse(localStorage.getItem('trip-expenses-usd-v2') || 'null'); if (s) { const have = new Set((s.expenses || []).map(x => x.id)); const add = this.state.expenses.filter(x => !have.has(x.id)); this.setState({ ...s, expenses: (s.expenses || []).concat(add) }); } } catch (e) {} }
   save(patch) { this.setState(patch, () => { const { people, n, expenses } = this.state; try { localStorage.setItem('trip-expenses-usd-v2', JSON.stringify({ people, n, expenses })); } catch (e) {} }); }
   renderVals() {
     const { people, fDate, fDesc, fAmt } = this.state;
     const expenses = (this.state.expenses || []).map(e => ({ ...e, ex: Array.isArray(e.ex) ? e.ex : ({ 3: [4], 4: [4] }[e.id] || []), amt: Number(e.amt != null ? e.amt : (e.yen || 0) / 150) || 0, payer: Number.isInteger(e.payer) ? e.payer : -1 }));
+    const MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+    const dkey = d => { const m = /([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2})/.exec(d || ''); return m && MON[m[1].toLowerCase()] ? MON[m[1].toLowerCase()] * 100 + Number(m[2]) : 9999; };
+    expenses.forEach((e, i) => { e.ord = i; });
+    expenses.sort((a, b) => dkey(a.date) - dkey(b.date) || a.ord - b.ord);
     const N = people.length;
     const usd = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const part = e => people.map((_, i) => i).filter(i => !e.ex.includes(i));
