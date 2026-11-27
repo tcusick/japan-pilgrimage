@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="trails.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>html,body,#m{height:100%;margin:0}
+.lbl{font:600 12px 'Hanken Grotesk',sans-serif;color:#1E2320;background:#fff;border:1px solid #1E2320;border-radius:0;box-shadow:none;padding:2px 6px}.lbl:before{display:none}
+.key{position:absolute;left:8px;bottom:22px;z-index:900;background:#fff;border:1px solid #D8CFBE;padding:6px 9px;font:600 12px 'Hanken Grotesk',sans-serif;color:#1E2320;line-height:1.6}
+.key i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:6px}
+.pt{width:12px;height:12px;background:#1E2320;border:2px solid #fff;border-radius:50%}
+.bed{width:22px;height:22px;background:#B8432B;color:#fff;border:2px solid #fff;border-radius:50%;font:700 11px/18px sans-serif;text-align:center}</style></head>
+<body><div id="m"></div><div class="key" id="key"></div>
+<script>
+const day=+new URLSearchParams(location.search).get('day')||13;
+const T=TRAILS,KT=[33.7311,135.3786],SH=[33.7274,135.9985],KK=[33.629,135.9425],ISE=[34.4887,136.7098],OSA=[34.6659,135.5013],KIX=[34.432,135.2304],NANBA=OSA;
+const map=L.map('m',{scrollWheelZoom:false,minZoom:6});
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri — Sources: Esri, HERE, Garmin, USGS, NGA, OpenStreetMap contributors'}).addTo(map);
+const pts=[];
+const line=(p,c,d)=>{L.polyline(p,{color:'#fff',weight:d?7:9,opacity:.9}).addTo(map);L.polyline(p,{color:c,weight:d?3:5,dashArray:d?'7 7':null}).addTo(map)};
+const off=d=>({left:[-14,0],right:[14,0],top:[0,-12],bottom:[0,12]}[d]);
+const tip=(m,t,d)=>{m.addTo(map).bindTooltip(t,{permanent:true,direction:d,offset:off(d),className:'lbl'})};
+const dot=(ll,t,d)=>{pts.push(ll);tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="pt"></div>',iconSize:[12,12],iconAnchor:[6,6]})}),t,d||'top')};
+const bed=(ll,t,d)=>{pts.push(ll);tip(L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="bed">&#9790;</div>',iconSize:[22,22],iconAnchor:[11,11]})}),t,d||'top')};
+const d2=(a,b)=>(a[0]-b[0])**2+(a[1]-b[1])**2;
+const near=(ln,p)=>ln.reduce((b,q,i)=>d2(q,p)<d2(ln[b],p)?i:b,0);
+const W='#B8432B',N='#3E6A8A',G='#9A9A92';
+let k=[['4px solid '+W,'Walkers on foot'],['3px dashed '+N,'Bus, taxi or boat (schematic)'],['0','<span style="color:#B8432B">&#9679;</span> Sleep']];
+const pad=.12;
+if(day===12){bed(KT,'Hotel Kii Tanabe','right');k=[k[2]];}
+else if(day===13){line(T[13].line,W);const t=T[13].wp;line([KT,t[0].ll],N,true);dot(KT,'Kii-Tanabe Station','left');dot(t[0].ll,'Takijiri-oji','right');bed(t[1].ll,'Takahara (Komorian)','top');}
+else if(day===14){const l=T[14].line,ci=near(l,T[14].wp[2].ll);line(l.slice(0,ci+1),W);line([T[14].wp[0].ll,T[14].wp[2].ll],N,true);k=[k[0],k[1],k[2]];dot(T[14].wp[0].ll,'Takahara (Komorian)','left');bed(T[14].wp[2].ll,'Chikatsuyu (Wago)','bottom');}
+else if(day===15){const l=T[14].line,ci=near(l,T[14].wp[2].ll);line(l.slice(ci),W);line([T[14].wp[3].ll,T[16].wp[0].ll],N,true);line(T[16].line,W);dot(T[14].wp[2].ll,'Chikatsuyu (start)','bottom');dot(T[14].wp[3].ll,'Tsugizakura-oji','top');dot(T[16].wp[0].ll,'Hosshinmon-oji','top');dot(T[16].wp[1].ll,'Hongu Taisha','right');bed(T[16].wp[2].ll,'Yunomine (Ryokan Adumaya, pending)','bottom');}
+else if(day===16){bed(T[16].wp[2].ll,'Yunomine','bottom');dot(T[16].wp[1].ll,'Hongu Taisha','right');line([T[16].wp[2].ll,T[16].wp[1].ll],N,true);k=[k[1],k[2]];}
+else if(day===17){line([T[16].wp[2].ll,T[16].wp[1].ll,SH],N,true);dot(T[16].wp[1].ll,'Hongu Taisha','right');bed(SH,'Shingu (Hayatama Taisha)','right');bed(T[16].wp[2].ll,'Yunomine (start)','bottom');k=[k[1],k[2]];}
+else if(day===18||day===19){const n=T[19].wp[3].ll;dot(SH,'Shingu','right');dot(n,'Nachi Taisha and falls','top');dot([33.668,135.893],'Nachisan (Mitaki Sanso nearby)','left');dot(KK,day===19?'Kii-Katsuura (Kamenoi nearby)':'Kii-Katsuura','right');k=[k[2]];}
+else if(day===20){dot(KK,'Kii-Katsuura','right');dot(ISE,'Iseshi (Ise house)','left');k=[k[2]];}
+else if(day===21){bed(ISE,'Ise (house, second night)','left');k=[k[2]];}
+else if(day===22){dot(ISE,'Ise (house)','left');bed(NANBA,'Osaka (Namba)','right');k=[k[2]];}
+else{bed(NANBA,'Osaka (Namba)','left');if(day===23)dot(KIX,'Kansai Airport (KIX)','left');k=[k[2]];}
+document.getElementById('key').innerHTML=k.map(x=>x.length===2?'<i style="border-top:'+x[0]+'"></i>'+x[1]:x).join('<br>')+(day>=17?'<br><span style="font-weight:400">Positions approximate, no routes drawn</span>':'');
+const B=L.latLngBounds(pts).pad(pad);
+const fit=()=>{const el=document.getElementById('m');if(!el.clientWidth||!el.clientHeight)return;map.invalidateSize();if(pts.length>1)map.fitBounds(B,{maxZoom:13});else map.setView(pts[0],13)};
+map.setView(pts[0],11);fit();addEventListener('load',fit);addEventListener('resize',fit);
+</script></body></html>

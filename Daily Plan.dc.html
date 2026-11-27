@@ -31,6 +31,7 @@
 <h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(26px,4vw,38px);line-height:1.1;margin:0 0 12px">{{ day.title }}</h2>
 <p style="font-size:17px;line-height:1.6;color:#2E3531;margin:0 0 20px;max-width:760px;text-wrap:pretty">{{ day.summary }}</p>
 
+<iframe src="{{ day.mapSrc }}" title="Map for the day" style="width:100%;height:340px;border:1px solid #D8CFBE;background:#fff;margin:0 0 20px;display:block"></iframe>
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 0;border-top:1px solid #D8CFBE;border-bottom:1px solid #D8CFBE;margin-bottom:22px">
 <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5D6460">Sleep</span>
 <span style="font-size:17px;font-weight:600">{{ day.sleep }}</span>
@@ -121,28 +122,28 @@ const DAYS = [
   nonwalkers:["Dawn at the falls and Seiganto-ji, or breakfast and a slow morning.","Bus to Kii-Katsuura, about 25 min.","Onsen and rest."],
   bags:"Carry the bags from Nachisan. They go with you on the bus. Check-out at Mitaki Sanso is 6:00 to 10:00 a.m.",
   meals:"Breakfast at Mitaki Sanso. Dinner and breakfast at Kamenoi; vegetarian meals can be changed to shojin kaiseki if you message the hotel by Mar 16. Dinner check-in is by 6:00 p.m.",
-  open:["Message Kamenoi by Mar 16 to switch to shojin kaiseki and get a written reply.","Kamenoi’s reply about room placement.","Optional Kamenoi activities: zazen, goma fire ritual, guided walk."] },
+  open:["Message Kamenoi by Mar 16 to switch to shojin kaiseki and get a written reply.","Kamenoi’s reply about room placement.","Optional: reserve the karaoke room (extra charge, reservation required); ask the price and hours.","Optional Kamenoi activities: zazen, goma fire ritual, guided walk."] },
 { iso:"2027-03-20", dow:"Sat", date:"Mar 20", title:"Kii-Katsuura to Ise", group:"4 (Vickie leaves for Tokyo)", summary:"Train up the coast to Ise, with an optional stop at Hana-no-Iwaya and Onigajo near Kumano-shi.",
   sleep:"Ise house (Mar 20 to 22)", status:"Booked", sleepNote:"Airbnb near Ise Jingu Geku for 4 adults. $488.",
   everyone:["Check out of Kamenoi by 10:00 a.m. Vickie leaves for Tokyo.","JR Nanki limited express to Kumano-shi, about 30 min (check the 2027 timetable; few trains a day).","Optional: Hana-no-Iwaya shrine and the Onigajo sea cliffs.","Continue on the Nanki to Taki, then a local train to Iseshi."],
   bags:"Carry the bags, or use station lockers at Kumano-shi if stopping there.",
   meals:"Breakfast at Kamenoi. Plan lunch and dinner in Ise; vegetarian restaurants not yet researched.",
   open:["Train times and seat reservations.","Bus times to Hana-no-Iwaya and Onigajo.","Whether to stop at Kumano-shi at all."] },
-{ iso:"2027-03-21", dow:"Sun", date:"Mar 21", title:"Ise Jingu and on to Osaka", group:"4", summary:"The Outer Shrine first, then the Inner Shrine. Kintetsu express to Osaka in the afternoon.",
-  sleep:"Osaka (Namba area)", status:"Not booked", sleepNote:"Hotel Royal Classic Osaka was the pick, for 4 in 2 rooms. No price found.",
-  everyone:["Outer Shrine (Geku), then the Inner Shrine (Naiku) across the Uji Bridge.","Okage Yokocho for lunch and tea.","Kintetsu limited express to Osaka, about 2 hr."],
-  bags:"Carry the bags. Check out of the Ise house first.",
+{ iso:"2027-03-21", dow:"Sun", date:"Mar 21", title:"Ise Jingu", group:"4", summary:"A full day at Ise Jingu. The Outer Shrine first, then the Inner Shrine, with no train to catch.",
+  sleep:"Ise house (second night)", status:"Booked", sleepNote:"Airbnb near Ise Jingu Geku, Mar 20 to 22, 4 adults. $488.",
+  everyone:["Outer Shrine (Geku) first, a short walk from the house.","Bus or taxi to the Inner Shrine (Naiku). Cross the Uji Bridge and rinse your hands at the Isuzu River.","Okage Yokocho for lunch and tea beside the Inner Shrine.","Return to the Ise house for the night."],
+  bags:"Leave the bags at the house.",
+  meals:"Plan lunch and dinner in Ise; vegetarian restaurants not yet researched.",
+  open:["Bus times between Geku and Naiku.","Vegetarian places to eat in Ise."] },
+{ iso:"2027-03-22", dow:"Mon", date:"Mar 22", title:"Ise to Osaka", group:"4", summary:"Check out in the morning and take the Kintetsu express to Osaka, so you are settled a day before the flight.",
+  sleep:"Osaka (Namba area)", status:"Not booked", sleepNote:"One night. Hotel Royal Classic Osaka was the pick, for 4 in 2 rooms. No price found.",
+  everyone:["Check out of the Ise house.","Kintetsu limited express from Ise to Osaka, about 2 hr (seat reservation: check).","Check in in Namba, collect the large bags shipped from Kyoto, and pack for the flight.","Free evening in Namba."],
+  bags:"Carry the bags from Ise. The large bags shipped from Kyoto wait at the Osaka hotel.",
   meals:"Vegetarian okonomiyaki in Namba: OKO Fun Okonomiyaki Bar (vegan menu) is the closest fit.",
-  open:["Book the Osaka hotel.","Kintetsu seat reservation."] },
-{ iso:"2027-03-22", dow:"Mon", date:"Mar 22", title:"Open day in Osaka", group:"4", summary:"No plan yet. Settle in a day ahead so the Mar 23 morning is unhurried.",
-  sleep:"Osaka (Namba area)", status:"Not booked", sleepNote:"Same hotel as Mar 21 if booked for two nights.",
-  everyone:["Nothing planned.","Pack the evening before."],
-  bags:"Collect the large bags that were shipped from Kyoto to the Osaka hotel.",
-  meals:"Namba has several vegetarian restaurants; see Mar 21.",
-  open:["Decide what to do with the day."] },
+  open:["Book the Osaka hotel for Mar 22.","Kintetsu seat reservation."] },
 { iso:"2027-03-23", dow:"Tue", date:"Mar 23", title:"Fly home from KIX", group:"4", summary:"Flight from Kansai International Airport at 3:30 p.m.",
   sleep:"Home", status:"Flights booked", sleepNote:"The Newark layover hotel is paid for.",
-  everyone:["Leave the Osaka hotel in the morning for KIX.","Flight departs at 3:30 p.m."],
+  everyone:["Check out of the Osaka hotel in the morning for KIX.","Flight departs at 3:30 p.m."],
   bags:"All the bags travel together to the airport.",
   meals:"Breakfast near the hotel.",
   open:["Choose the train to KIX and the departure time."] }
@@ -162,7 +163,7 @@ class Component extends DCLogic {
     const col = { "Booked": "#2E4A3B", "Flights booked": "#2E4A3B", "Pending": "#B8432B", "Not booked": "#5D6460" };
     return {
       tabs: DAYS.map((x, j) => ({ dow: x.dow, date: x.date, bg: j === i ? "#1E2320" : "transparent", fg: j === i ? "#F3EEE4" : "#1E2320", pick: () => this.go(j) })),
-      day: { ...d, label: d.dow + " " + d.date + " · Day " + (i + 1), together: !d.split, split: !!d.split, statusBg: col[d.status] || "#5D6460", walkers: d.walkers || [], nonwalkers: d.nonwalkers || [], everyone: d.everyone || [] },
+      day: { ...d, mapSrc: "day-map.html?day=" + Number(d.iso.slice(8)), label: d.dow + " " + d.date + " · Day " + (i + 1), together: !d.split, split: !!d.split, statusBg: col[d.status] || "#5D6460", walkers: d.walkers || [], nonwalkers: d.nonwalkers || [], everyone: d.everyone || [] },
       prev: () => i > 0 && this.go(i - 1), next: () => i < DAYS.length - 1 && this.go(i + 1),
       prevLabel: i > 0 ? "← " + DAYS[i - 1].date : "",
       nextLabel: i < DAYS.length - 1 ? DAYS[i + 1].date + " →" : ""
