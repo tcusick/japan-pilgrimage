@@ -70,7 +70,8 @@ class Component extends DCLogic {
       { id: 6, date: 'Mar 12', desc: 'Hotel Kii Tanabe, Kii-Tanabe: 5 rooms with breakfast (Booking.com)', amt: 310, payer: 0 },
       { id: 7, date: 'Mar 14', desc: 'Minshuku Wago, Chikatsuyu: 3 rooms, no meals (Booking.com)', amt: 399.84, payer: 0 },
       { id: 8, date: 'Mar 18', desc: 'Mitaki Sanso, Nachisan: 2 rooms, supper and breakfast (Booking.com; due Mar 9)', amt: 697.7, payer: 0 },
-      { id: 9, date: 'Mar 19', desc: 'Kamenoi Hotel Nachi Katsuura, Kii-Katsuura: 2 rooms, dinner and breakfast (Booking.com)', amt: 577.57, payer: 0 }
+      { id: 9, date: 'Mar 19', desc: 'Kamenoi Hotel Nachi Katsuura, Kii-Katsuura: 2 rooms, dinner and breakfast (Booking.com)', amt: 577.57, payer: 0 },
+      { id: 10, date: 'Mar 15–17', desc: 'Kumano Base, Hongu: whole house (Airbnb)', amt: 510.82, payer: 0 }
     ], fDate: '', fDesc: '', fAmt: '' };
   componentDidMount() { try { const s = JSON.parse(localStorage.getItem('trip-expenses-usd-v2') || 'null'); if (s) { const have = new Set((s.expenses || []).map(x => x.id)); const add = this.state.expenses.filter(x => !have.has(x.id)); this.setState({ ...s, expenses: (s.expenses || []).concat(add) }); } } catch (e) {} }
   save(patch) { this.setState(patch, () => { const { people, n, expenses } = this.state; try { localStorage.setItem('trip-expenses-usd-v2', JSON.stringify({ people, n, expenses })); } catch (e) {} }); }

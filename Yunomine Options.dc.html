@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Japan Pilgrimage · Mar 15–16 lodging search</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#F3EEE4;color:#1E2320;font-family:'Hanken Grotesk',sans-serif}a{color:#2E4A3B}a:hover{color:#B8432B}*{box-sizing:border-box}</style>
+</helmet>
+<div style="max-width:1100px;margin:0 auto;padding:clamp(24px,5vw,60px) clamp(16px,4vw,40px) 80px">
+<div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:10px">Temporary working page · Mar 15 and 16</div>
+<h1 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0 0 12px">Where to stay near Yunomine</h1>
+<p style="font-size:16px;line-height:1.6;color:#2E3531;margin:0 0 8px;max-width:760px;text-wrap:pretty">Ryokan Adumaya has not replied and may be full. This page compares staying in Yunomine with staying in Hongu or Kawayu and taking the bus to the onsen village. Prices and availability are not confirmed for 2027, and I could not check live calendars. Bus times are not confirmed; the local buses run only a few times a day.</p>
+<p style="font-size:15px;line-height:1.6;color:#5D6460;margin:0 0 28px;max-width:760px">The group is 5 adults, with 3 rooms the likely split, plus Vickie until Mar 20. Mahoroma luggage prices are the same for Hongu, Yunomine, Watarase, Kawayu and Ukegawa.</p>
+
+<h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:26px;margin:0 0 14px">Three ways to do it</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-bottom:40px">
+<sc-for list="{{ ways }}" as="w" hint-placeholder-count="3">
+<div style="background:#F7F3EA;border:1px solid #D8CFBE;padding:18px 20px"><div style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:21px;margin-bottom:8px">{{ w.t }}</div><div style="font-size:15px;line-height:1.55;color:#2E3531;margin-bottom:8px">{{ w.p }}</div><div style="font-size:14px;line-height:1.5;color:#5D6460"><b>Against:</b> {{ w.c }}</div></div>
+</sc-for>
+</div>
+
+<h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:26px;margin:0 0 6px">Places to stay</h2>
+<p style="font-size:15px;color:#5D6460;margin:0 0 16px">Links go to the listing where I have one. For the rest, search the name on the Kumano Travel accommodation list.</p>
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+<div style="margin:0 0 44px"><h3 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:23px;margin:0 0 4px;border-bottom:2px solid #1E2320;padding-bottom:6px">{{ g.area }}</h3><p style="font-size:15px;line-height:1.55;color:#2E3531;margin:8px 0 16px;max-width:760px">{{ g.note }}</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:18px">
+<sc-for list="{{ g.stays }}" as="s" hint-placeholder-count="2">
+<div style="background:#F7F3EA;border:1px solid #D8CFBE;padding:20px 20px 16px;display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><h3 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:20px;line-height:1.2;margin:0">{{ s.n }}</h3><span style="flex:none;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#fff;background:{{ s.bg }};padding:4px 8px">{{ s.tag }}</span></div>
+<div style="font-family:'Shippori Mincho',serif;font-size:22px">{{ s.price }}</div>
+<div style="font-size:14px;line-height:1.55;color:#2E3531"><b>Baths:</b> {{ s.bath }}</div>
+<div style="font-size:14px;line-height:1.55;color:#2E3531"><b>Food:</b> {{ s.food }}</div>
+<div style="font-size:14px;line-height:1.55;color:#2E3531"><b>Transport:</b> {{ s.tr }}</div>
+<div style="font-size:14px;line-height:1.55;color:#2E3531"><b>Note:</b> {{ s.note }}</div>
+<div style="font-size:14px;margin-top:4px"><a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.link }}</a> · <a href="{{ s.map }}" target="_blank" rel="noopener">Map</a></div>
+</div>
+</sc-for>
+</div></div>
+</sc-for>
+
+<h2 style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:26px;margin:0 0 14px">Best onsens to visit</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-bottom:36px">
+<sc-for list="{{ onsens }}" as="o" hint-placeholder-count="4">
+<div style="background:#F7F3EA;border:1px solid #D8CFBE;padding:18px 20px"><div style="font-family:'Shippori Mincho',serif;font-weight:600;font-size:20px;margin-bottom:4px">{{ o.n }}</div><div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:8px">{{ o.w }}</div><div style="font-size:15px;line-height:1.55;color:#2E3531">{{ o.p }}</div><div style="font-size:14px;margin-top:8px"><a href="{{ o.url }}" target="_blank" rel="noopener">Map</a></div></div>
+</sc-for>
+</div>
+
+<div style="border-left:3px solid #B8432B;padding:4px 0 4px 16px"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#B8432B;margin-bottom:6px">Check before booking</div>
+<sc-for list="{{ checks }}" as="c" hint-placeholder-count="4"><div style="font-size:15px;line-height:1.55;color:#2E3531;padding:2px 0">{{ c }}</div></sc-for></div>
+<p style="font-size:14px;color:#5D6460;margin:28px 0 0">See also <a href="Lodging Options.dc.html">Lodging Options</a> and <a href="Daily Plan.dc.html">Daily Plan</a>.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const KT = "https://www.kumano-travel.com/en/accommodations";
+class Component extends DCLogic {
+  stayList() {
+    const G = "#2E4A3B", B = "#5D6460";
+    return [
+        { n: "Ryokan Adumaya", tag: "Yunomine · first choice", bg: G, price: "From $122 a night (older listing)", bath: "Public indoor and outdoor onsen, private baths in four rooms.", food: "Dinner and breakfast; ask for vegetarian in writing. The menu leans on beef shabu-shabu.", tr: "In the village center, a short walk from Tsuboyu and the bus stop.", note: "Booking.com showed no availability for Mar 15–16, and your email has no reply.", url: KT + "/ryokan-adumaya", link: "Kumano Travel page" },
+        { n: "Minshuku Yunosato", tag: "Yunomine · backup", bg: B, price: "$112 solo; confirm for 5", bath: "Private indoor and riverside onsens.", food: "Dinner, breakfast and lunch box available; confirm vegetarian.", tr: "In Yunomine, near the bus stop.", note: "Check 3 rooms for 2 nights.", url: KT + "/minshuku-yunosato", link: "Kumano Travel page" },
+        { n: "Ryokan Yunomineso", tag: "Yunomine", bg: B, price: "Not found", bath: "Public baths and two private onsen rooms.", food: "Reviewers praise the vegetarian kaiseki, and the bureau lists vegan meals on request. One review said vegetarian options could be improved.", tr: "A short walk from the village; a reviewer said the staff dropped them at the bus stop.", note: "Meal plans change to no meals from April 2027, so March should still have them.", url: KT, link: "Search 'Yunomineso' on Kumano Travel" },
+        { n: "Minshuku Kuraya", tag: "Yunomine", bg: B, price: "Not found", bath: "Private onsen.", food: "Reviewers praise the dinner; vegetarian possible on request. Choose a plan with dinner, since Yunomine has one simple restaurant.", tr: "Right behind the Yunomine bus stop.", note: "Ask about 3 rooms.", url: KT, link: "Search 'Kuraya' on Kumano Travel" },
+        { n: "Kumano Base (Airbnb house)", tag: "Hongu town", bg: B, price: "$510 for 2 nights on Airbnb with the early booking discount, about $102 each", bath: "One bathroom with a tub. No onsen.", food: "No meals; large kitchen. A shop 2 minutes away and another across the street.", tr: "Buses to Hosshinmon, Kawayu and Shingu stop at the door, per a reviewer. About a 10 minute walk to Hongu Taisha.", note: "Booked on Airbnb, $510.82. Free cancellation before 4:00 p.m. on Mar 10. Booking.com: $536 with free cancellation before Mar 14. 6 twin futons: 3 in the bedroom and 2 in the living room, 1 spare.", url: "https://www.airbnb.com/rooms/1205687711977531521?adults=5&check_in=2027-03-15&check_out=2027-03-17", link: "Airbnb listing" },
+        { n: "Kumano-an (Guesthouse Kumano Iori, Airbnb house)", tag: "Ukegawa, near Hongu", bg: B, price: "$690 for 2 nights, about $138 each", bath: "One bathroom with a tub. No onsen.", food: "No meals; well-equipped kitchen, no full grocery store in the village. A market with a small restaurant, and the owner's ramen shop about a 5 minute walk away (probably not vegetarian).", tr: "About a 10 minute drive to Hongu Taisha, Yunomine and Kawayu. Bus stop in front of the house, but buses run about 3 times a day. The host has driven guests; ask about the Mar 15 pickup at Hongu Taisha and the Mar 17 trip to the 2:30 p.m. boat.", note: "4 bedrooms, 8 beds, mostly futons. Washer, dryer, free parking, self check-in 3:00 to 10:00 p.m., check-out by 10:00 a.m. 5.0 from 19 reviews, Superhost. Free cancellation before Mar 10.", url: "https://www.airbnb.com/rooms/1645980236683953666?adults=5&check_in=2027-03-15&check_out=2027-03-17", link: "Airbnb listing" },
+        { n: "Fujiya Ryokan", tag: "Kawayu · wow pick", bg: G, price: "About $209 per person in modern rooms, $137 standard", bath: "Kumano Modern Rooms have their own open-air bath and foot bath.", food: "Dinner and breakfast included. I found no vegetarian information; ask.", tr: "The bus stops at the door (Fujiya-mae). Kawayu is about 10 minutes by bus from Yunomine.", note: "About 31 rooms, so less intimate. Reviews are mixed on the food for the price (4.52 from 214).", url: KT, link: "Search 'Fujiya' on Kumano Travel" },
+        { n: "Kawayu Midoriya", tag: "Kawayu", bg: B, price: "About $87 per person with dinner and breakfast", bath: "Riverside open-air onsen; Ryokusui Suite has a private open-air bath.", food: "Kumano Travel lists 'Vegetarian OK'.", tr: "Kawayu, about 10 minutes by bus to Yunomine.", note: "A reviewer called the location remote with little nearby.", url: KT, link: "Search 'Midoriya' on Kumano Travel" },
+        { n: "Kawayu Onsen Tabi-no-Yado Shiba", tag: "Kawayu · private house", bg: B, price: "About $143 per person with meals, $117 without", bath: "A house with its own hot spring bath; one group a day, 3 rooms.", food: "Meals are bento from Minshuku Omuraya, which a reviewer said handled a vegetarian, no-dashi diet. Not confirmed for this plan.", tr: "Not confirmed how close the bus stop is.", note: "Listing is old. One shared bath, not private bathrooms.", url: KT, link: "Search 'Shiba' on Kumano Travel" },
+        { n: "Hotel Sasayuri / Yamayuri", tag: "Watarase", bg: B, price: "About $100 per person room-only for two", bath: "Large outdoor baths and four private open-air baths.", food: "Kumano Travel lists 'Vegetarian OK'; meals extra.", tr: "Best reached by car. Ask whether they pick up from the Hongu bus terminal.", note: "The pickup question decides this one.", url: KT, link: "Search 'Sasayuri' on Kumano Travel" }
+      ];
+  }
+  renderVals() {
+    const G = "#2E4A3B", B = "#5D6460";
+    return {
+      ways: [
+        { t: "A. Stay in Yunomine", p: "No bus for the onsen: Tsuboyu is a short walk. Best for the rest day and for evening baths. Adumaya, Yunosato and a few small inns are here.", c: "Few rooms, so availability is the problem, and small inns are older and plainer." },
+        { t: "B. Stay in Hongu town, bus to Yunomine", p: "Most options to stay in, with a bus terminal, shops and some restaurants, and Hongu Taisha close. A bus of about 10 minutes reaches Yunomine for the day.", c: "Buses are infrequent. A missed last bus ends the day, so confirm times first." },
+        { t: "C. Stay in Kawayu Onsen, bus to Yunomine", p: "The nicest inns, several with private open-air baths, and a riverside setting. About 10 minutes by bus to Yunomine.", c: "Quiet, with little to do besides the inns. Meals are mostly at the inn, and vegetarian meals need to be confirmed." }
+      ],
+      groups: (() => {
+        const M = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+        const mk = (names, list) => list.filter(s => names.includes(s.n)).map(s => ({ ...s, map: M(s.n + " Kumano Wakayama") }));
+        const all = this.stayList();
+        return [
+          { area: "Yunomine Onsen", note: "No bus needed for Tsuboyu and the public bath. Few rooms, so availability is the risk.", stays: mk(["Ryokan Adumaya", "Minshuku Yunosato", "Ryokan Yunomineso", "Minshuku Kuraya"], all) },
+          { area: "Hongu town and Ukegawa", note: "Bus terminal, shops and Hongu Taisha nearby. About 10 minutes by bus to Yunomine, and the buses are infrequent.", stays: mk(["Kumano Base (Airbnb house)", "Kumano-an (Guesthouse Kumano Iori, Airbnb house)"], all) },
+          { area: "Kawayu Onsen", note: "The nicest inns, with private open-air baths in some. About 10 minutes by bus to Yunomine. Quiet, with little besides the inns.", stays: mk(["Fujiya Ryokan", "Kawayu Midoriya", "Kawayu Onsen Tabi-no-Yado Shiba"], all) },
+          { area: "Watarase Onsen", note: "Resort-style baths, best reached by car, so the pickup question decides this one.", stays: mk(["Hotel Sasayuri / Yamayuri"], all) }
+        ];
+      })(),
+      onsens: [
+        { n: "Tsuboyu", url: "https://www.google.com/maps/search/?api=1&query=Tsuboyu%20Yunomine%20Onsen", w: "Yunomine · top pick", p: "A tiny stone hut over a hot spring beside the stream, and a World Heritage site. One party gets about 30 minutes, booked at the ticket window, for a small fee. The most memorable single bath on the route." },
+        { n: "Yunomine public bath", url: "https://www.google.com/maps/search/?api=1&query=Yunomine%20Onsen%20public%20bath%20Kumano", w: "Yunomine", p: "Next to Tsuboyu. An easy second stop, with the hot-spring egg stand by the stream." },
+        { n: "Kawayu riverbed bath (Senninburo)", url: "https://www.google.com/maps/search/?api=1&query=Kawayu%20Onsen%20Senninburo", w: "Kawayu · probably closed", p: "Hot water dug into the riverbed. I believe it runs only in winter, roughly December to February, so check before relying on it." },
+        { n: "Watarase Onsen", url: "https://www.google.com/maps/search/?api=1&query=Watarase%20Onsen%20Kumano", w: "Watarase", p: "The big resort baths at Hotel Sasayuri. Day visits by outside guests are possible, but I have not confirmed it." }
+      ],
+      checks: [
+        "Calendar for Mar 15 and 16 for 5 adults, 3 rooms, plus Vickie.",
+        "Vegetarian with no dashi, with dinner and breakfast, in writing.",
+        "Last bus back from Yunomine on Mar 16, and the first bus out on Mar 17 for the Kawabune Center.",
+        "Free cancellation dates, so you can hold one place while waiting for Adumaya.",
+        "Mahoroma covers Chikatsuyu to the Hongu area for Mar 15, and the Hongu area to Shingu for Mar 17."
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

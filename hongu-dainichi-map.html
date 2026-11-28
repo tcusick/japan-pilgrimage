@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<script src="trails.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>html,body,#m{height:100%;margin:0}body{font-family:'Hanken Grotesk',sans-serif}
+.lbl{font:600 12px 'Hanken Grotesk',sans-serif;color:#1E2320;background:#fff;border:1px solid #1E2320;border-radius:0;box-shadow:none;padding:2px 6px}
+.lbl:before{display:none}
+.key{position:absolute;left:8px;bottom:22px;z-index:900;background:#fff;border:1px solid #D8CFBE;padding:6px 9px;font:600 12px 'Hanken Grotesk',sans-serif;color:#1E2320;line-height:1.6}
+.key i{display:inline-block;width:22px;height:0;vertical-align:middle;margin-right:6px}
+.bed{width:22px;height:22px;background:#B8432B;color:#fff;border:2px solid #fff;border-radius:50%;font:700 11px/18px 'Hanken Grotesk',sans-serif;text-align:center}
+.pt{width:12px;height:12px;background:#1E2320;border:2px solid #fff;border-radius:50%}</style></head>
+<body><div id="m"></div>
+<div class="key"><i style="border-top:4px solid #2E4A3B"></i>Dainichi-goe, Hongu Taisha to Yunomine<br><span style="color:#B8432B">&#9679;</span> Start and finish<br>About 2.0 mi (3.3 km) on foot. Bus back to Hongu.</div>
+<script>
+const s=TRAILS['16'],G=s.wp[1].ll,Y=s.wp[2].ll;
+let bi=0,bd=1e9;s.line.forEach((p,i)=>{const d=(p[0]-G[0])**2+(p[1]-G[1])**2;if(d<bd){bd=d;bi=i}});
+const seg=s.line.slice(bi);
+const map=L.map('m',{scrollWheelZoom:false,minZoom:9});
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Tiles © Esri — Sources: Esri, HERE, Garmin, USGS, NGA, OpenStreetMap contributors'}).addTo(map);
+L.polyline(seg,{color:'#fff',weight:9,opacity:.9}).addTo(map);L.polyline(seg,{color:'#2E4A3B',weight:5}).addTo(map);
+const bed=(ll,t,dir)=>L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="bed"></div>',iconSize:[22,22],iconAnchor:[11,11]})}).addTo(map).bindTooltip(t,{permanent:true,direction:dir,offset:[dir==='left'?-14:14,0],className:'lbl'});
+bed(G,'Hongu Taisha','right');bed(Y,'Yunomine Onsen','left');
+const B=L.latLngBounds(seg).pad(0.4);
+const fit=()=>{const el=document.getElementById('m');if(!el.clientWidth||!el.clientHeight)return;map.invalidateSize();map.fitBounds(B);};
+map.setView(B.getCenter(),14);fit();window.addEventListener('load',fit);window.addEventListener('resize',fit);
+</script></body></html>
